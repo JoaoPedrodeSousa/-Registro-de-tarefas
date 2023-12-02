@@ -11,14 +11,30 @@
 // Separe 
 
 typedef struct { // <----------------------- struct com as propriedades de cada tarefa
+    char titulo[25];
     char descricao[200];
-    int andamento;
+    char estado[9]; //Pendente, Fazendo, Concluido
+
 } Tarefa;
 
 int main() {
     int numero;
+    // Menu inicial
+    printf("--------------------------------------------------------------");
 
-    printf("Digite um número de 1 a 7: ");
+    printf("1. Inserir nova tarefa.\n");
+    printf("2. Mostrar tarefas cadastradas.\n");
+    printf("3. Buscar por tarefa.\n");
+    printf("4. Editar informações de uma tarefa.\n");
+    printf("5. Remover tarefa.\n");
+    printf("6. Marcar conclusao de uma tarefa especifica.\n");
+    printf("7. Salvar lista de tarefas em um arquivo.\n\n");
+    
+    printf("--------------------------------------------------------------");
+
+
+    
+    printf("Digite um número para realizar alguma ação: ");
     scanf("%d", &numero);
 
     //Estrutura básica do documento
@@ -29,7 +45,7 @@ int main() {
             break;
 
         case 2: //(Gustavo)
-            printf("Mostrar tarefas cadastradas;\n");
+            printf("2. Mostrar tarefas cadastradas;\n");
             break;
 
         case 3: //(João)
@@ -53,7 +69,7 @@ int main() {
             break;
 
         default:
-            printf("Comando inválido\n");
+            printf("Número inválido, tente novamente! \n");
     }
 
     return 0;

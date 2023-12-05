@@ -20,6 +20,31 @@ typedef struct { // <----------------------- struct com as propriedades de cada 
 
 } Tarefa;
 
+void inserirTarefa(Tarefa lista[], int totalTarefas) {
+    printf("Digite o titulo da tarefa: ");
+    scanf(" %[^\n]", lista[totalTarefas].titulo);
+    printf("Digite a descricao da tarefa: ");
+    scanf(" %[^\n]", lista[totalTarefas].descricao);
+    lista[totalTarefas].andamento = 0;
+    (totalTarefas)++;
+    printf("Tarefa cadastrada com sucesso!\n");
+}
+
+// Função para mostrar todas as tarefas cadastradas
+void mostrarTarefas(Tarefa lista[], int totalTarefas) {
+    if (totalTarefas == 0) {
+        printf("Nenhuma tarefa cadastrada.\n");
+    } else {
+        printf("Tarefas cadastradas:\n");
+        for (int i = 0; i < totalTarefas; i++) {
+            printf("Tarefa %d:\n", i + 1);
+            printf("Titulo: %s\n", lista[i].titulo);
+            printf("Descricao: %s\n", lista[i].descricao);
+            printf("Status: %s\n", lista[i].andamento ? "Concluida" : "Nao concluida");
+            printf("----------------------------------------\n");
+        }
+    }
+}
 
 Tarefa buscarTarefaPorTitulo(Tarefa listaTarefas[], int length, char titulo[25]){
 

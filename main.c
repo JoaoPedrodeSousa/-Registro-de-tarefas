@@ -82,7 +82,7 @@ Tarefa buscarTarefaPorPosicao(Tarefa listaTarefas[], int length, int posicao){
         }
     }
 }
-
+// teste
 int main() {
     int numero;
     // Menu inicial
@@ -150,7 +150,32 @@ int main() {
             break;
 
         case 4: //(Erik)
-            printf("Editar informações de uma tarefa; \n");
+            int respostaEdicao;
+            int lengthEdicao = sizeof(listaTarefas) / sizeof(listaTarefas[0]);
+
+            printf("Buscar por tarefa por titulo ou posicao?\n");
+            printf("0 - Titulo\n");
+            printf("1 - Posicao\n");
+            scanf("%d",&respostaEdicao);
+
+            if(resposta == 0){
+                char titulo[25];
+                printf("Qual o titulo da tarefa que você deseja buscar? ");
+                scanf("%s",&titulo);
+                buscarTarefaPorTitulo(listaTarefas, lengthEdicao, titulo);
+            }
+            
+            else if(resposta == 1){
+                int posicao;
+                printf("Qual a posicao da tarefa que você deseja editar? ");
+                scanf("%d",&posicao);
+                printf("\n");
+                editarTarefaPosicao(listaTarefas, length, posicao);
+            }
+
+            else{
+                printf("Não existe nenhum titulo ou posicao com esse valor\n");
+            }
             break;
 
         case 5: //(Viktor)

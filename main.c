@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 typedef struct { // <----------------------- struct com as propriedades de cada tarefa
     int posicao;
@@ -24,30 +25,55 @@ void exibirMenu(){
     printf("--------------------------------------------------------------\n");
 }
 
-void inserirTarefa(Tarefa lista[], int totalTarefas) {
-    printf("Digite o titulo da tarefa: ");
-    scanf(" %[^\n]", lista[totalTarefas].titulo);
-    printf("Digite a descricao da tarefa: ");
-    scanf(" %[^\n]", lista[totalTarefas].descricao);
-    lista[totalTarefas].andamento = 0;
-    (totalTarefas)++;
-    printf("Tarefa cadastrada com sucesso!\n");
+void inserirTarefa(Tarefa listaTarefas[], int *totalTarefas) {
+    printf("----------------------------------------\n");
+    int tamanho;
+
+    printf("\nQuantas tarefas deseja inserir? ");
+    scanf("%d", &tamanho);
+    while (getchar() != '\n');
+    
+    listaTarefas = realloc(listaTarefas, (*totalTarefas + tamanho) * sizeof(Tarefa));
+
+    for (int i = *totalTarefas; i < *totalTarefas + tamanho; i++) {
+        listaTarefas[i].posicao = i + 1;
+
+        printf("Digite o titulo da tarefa: ");
+        scanf(" %[^\n]", listaTarefas[i].titulo);
+
+        printf("Digite a descricao da tarefa: ");
+        scanf(" %[^\n]", listaTarefas[i].descricao);
+
+        strcpy(listaTarefas[i].estado, "Pendente"); //Todas as tarefas são criadas com o estado Pendente por padrão
+    }
+
+    *totalTarefas += tamanho;
+
+    printf("Tarefa inserida com sucesso!!!\n");
+    printf("----------------------------------------\n");
 }
 
+
 // Função para mostrar todas as tarefas cadastradas
-void mostrarTarefas(Tarefa lista[], int totalTarefas) {
+void mostrarTarefas(Tarefa listaTarefas[], int totalTarefas) {
+    printf("----------------------------------------\n");
+
     if (totalTarefas == 0) {
         printf("Nenhuma tarefa cadastrada.\n");
-    } else {
+    }
+
+    else {
         printf("Tarefas cadastradas:\n");
         for (int i = 0; i < totalTarefas; i++) {
-            printf("Tarefa %d:\n", i + 1);
-            printf("Titulo: %s\n", lista[i].titulo);
-            printf("Descricao: %s\n", lista[i].descricao);
-            printf("Status: %s\n", lista[i].andamento ? "Concluida" : "Nao concluida");
-            printf("----------------------------------------\n");
+            printf("Posicao %d:\n", listaTarefas[i].posicao);
+            printf("Titulo: %s\n", listaTarefas[i].titulo);
+            printf("Descricao: %s\n", listaTarefas[i].descricao);
+            printf("Estado: %s\n", listaTarefas[i].estado);
         }
     }
+    
+    printf("----------------------------------------\n");
+
 }
 
 void buscarTarefaPorTitulo(Tarefa *listaTarefas, int length, char *titulo) {
@@ -105,41 +131,38 @@ void buscarTarefaPorPosicao(Tarefa *listaTarefas, int length, int posicao) {
 }
 
 int main() {
-    int numero;
-    Tarefa listaTarefas[] = {
-        {0, "oi", "teste", "Pendente"},
-        {1, "Oi2", "teste2", "Fazendo"},
-        {2, "Oi3", "teste3", "Concluido"}
-    };
+    int opcaoMenu;
 
-    while(numero != 8){
+    Tarefa listaTarefas[100];
+    int tamanhoLista = 0;
+
+    while(opcaoMenu != 8){
 
         //Exibe menu inicial
         exibirMenu();
         
         printf("Digite um numero para realizar alguma acao: \n");
-        scanf("%d", &numero);
+        scanf("%d", &opcaoMenu);
 
         //Finalizar execucao do script
-        if (numero == 8){
+        if (opcaoMenu == 8){
             printf("Programa sendo finalizado...\n");
             break;
         }
 
         //Estrutura basica do documento
-        switch(numero) {
+        switch(opcaoMenu) {
             case 1:
-                printf("1. Inserir nova tarefa;\n");
+                inserirTarefa(listaTarefas,&tamanhoLista);
                 break;
 
             case 2: 
-                printf("2. Mostrar tarefas cadastradas;\n");
+                mostrarTarefas(listaTarefas,tamanhoLista);
                 break;
 
             case 3: 
                 int resposta;
                 int length = sizeof(listaTarefas) / sizeof(listaTarefas[0]);
-
                 printf("Escolha uma das opcoes abaixo para buscar tarefas por titulo ou posicao:\n");
                 printf("0 - Titulo\n");
                 printf("1 - Posicao\n");

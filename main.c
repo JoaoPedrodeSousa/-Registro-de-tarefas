@@ -129,6 +129,54 @@ void buscarTarefaPorPosicao(Tarefa *listaTarefas, int length, int posicao) {
     printf("--------------------------------------------------------------\n");
 
 }
+void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
+    int busca;
+    int resultado = 0;
+
+    printf("--------------------------------------\n");
+    printf("Editar Informacoes de uma Tarefa\n");
+    printf("\nQual tarefa deseja editar?: ");//O usuário digitara a posicao da tarefa para poder edita-la
+    scanf("%d", &busca);
+
+    printf("\n");
+
+    // Limpar o buffer de entrada
+    while(getchar() != '\n');
+
+    for(int i = 0; i < tamanhoLista; i++) {
+        if(listaTarefas[i].posicao == busca) {
+            printf("Posicao da tarefa: %d\n", listaTarefas[i].posicao);
+            printf("Titulo da tarefa: %s\n", listaTarefas[i].titulo);
+            printf("Descricao da tarefa: %s\n", listaTarefas[i].descricao);
+            printf("Estado da tarefa: %s\n", listaTarefas[i].estado);
+            printf("**********************************\n");
+
+            printf("\n");
+
+            //printf("Digite o novo 'numero' da tarefa: ");
+            //scanf("%d", &listaTarefas[i].posicao);
+
+            // Limpar o buffer de entrada
+            while(getchar() != '\n');
+
+            printf("Digite o novo 'titulo' da tarefa: ");
+            fgets(listaTarefas[i].titulo, 25, stdin);
+            listaTarefas[i].titulo[strcspn(listaTarefas[i].titulo, "\n")] = '\0';
+
+            printf("Digite o novo 'descricao' da tarefa: ");
+            fgets(listaTarefas[i].descricao, 200, stdin);
+            listaTarefas[i].descricao[strcspn(listaTarefas[i].descricao, "\n")] = '\0';
+
+            printf("Edicao realizada com sucesso\n");
+            resultado = 1;
+            break;
+        }
+    }
+
+    if(!resultado) {
+        printf("Tarefa nao encontrada!\n");
+    }
+}
 
 int main() {
     int opcaoMenu;
@@ -147,7 +195,7 @@ int main() {
         //Finalizar execucao do script
         if (opcaoMenu == 8){
             printf("Programa sendo finalizado...\n");
-            break;
+            exit(1);
         }
 
         //Estrutura basica do documento
@@ -202,32 +250,7 @@ int main() {
                 break;
 
             case 4:
-                int respostaEdicao;
-                int lengthEdicao = sizeof(listaTarefas) / sizeof(listaTarefas[0]);
-
-                printf("Buscar por tarefa por titulo ou posicao?\n");
-                printf("0 - Titulo\n");
-                printf("1 - Posicao\n");
-                scanf("%d",&respostaEdicao);
-
-                if(resposta == 0){
-                    char titulo[25];
-                    printf("Qual o titulo da tarefa que você deseja buscar? ");
-                    scanf("%s",&titulo);
-                    buscarTarefaPorTitulo(listaTarefas, lengthEdicao, titulo);
-                }
-                
-                else if(resposta == 1){
-                    int posicao;
-                    printf("Qual a posicao da tarefa que você deseja editar? ");
-                    scanf("%d",&posicao);
-                    printf("\n");
-                    editarTarefaPosicao(listaTarefas, length, posicao);
-                }
-
-                else{
-                    printf("Não existe nenhum titulo ou posicao com esse valor\n");
-                }
+                editarTarefa(listaTarefas, tamanhoLista);
                 break;
 
             case 5:

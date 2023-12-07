@@ -180,7 +180,7 @@ void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
 
 void deletarTarefa(Tarefa listaTarefas[], int length){
 //Recebe a posição e a reduz em 1 para funcionamento do vetor, já que o usuário inserirá sempre uma posição a mais das que se utilizam no código
-    printf("Qual a posicao deseja excluir?\n");
+    printf("Qual posicao deseja excluir?: \n");
     int posicao;
     scanf("%d", &posicao);
     posicao--;
@@ -201,6 +201,54 @@ void deletarTarefa(Tarefa listaTarefas[], int length){
     }
 }
 
+void marcarConclusaoTarefa(Tarefa listaTarefas[], int length){
+    int busca;
+    int escolha;
+    int resultado=0;
+
+    printf("\nQual tarefa deseja marcar?: \n");
+    scanf("%d", &busca);
+
+//Limpa o buffer de entrada
+    while(getchar() != '\n');
+
+    for(int i=0; i<length; i++) {
+        if(listaTarefas[i].posicao==busca) {
+            printf("Numero tarefa: %d\n", listaTarefas[i].posicao);
+            printf("Titulo tarefa: %s\n", listaTarefas[i].titulo);
+            printf("Descricao tarefa: %s\n", listaTarefas[i].descricao);
+            printf("Status tarefa: %s\n", listaTarefas[i].estado);
+
+            printf("Opcoes de marcacao de Tarefa:\n");
+            printf("1 - Pendente\n");
+            printf("2 - Fazendo\n");
+            printf("2 - Concluida\n");            
+            printf("\nInforme o sestado desta tarefa: ");
+            scanf("%d",&escolha);
+
+            if(escolha==1){
+                strcpy(listaTarefas[i].estado,"Pendente");
+                break;
+            }else if(escolha==2){
+                strcpy(listaTarefas[i].estado,"Fazendo");
+                break;
+            }else if(escolha==3){
+                strcpy(listaTarefas[i].estado,"Concluida");
+            }else{
+                printf("Opcao invalida");
+                break;
+            }
+            printf("Marcacao realizada com sucesso\n");
+
+            resultado=1;
+            break;
+        }
+    }
+
+    if(!resultado) {
+        printf("Tarefa nao encontrada!\n");
+    }
+}
 
 int main() {
     int opcaoMenu;
@@ -282,7 +330,8 @@ Tarefa listaTarefas[100];
                 break;
 
             case 6:
-                printf("Marcar conclusão de uma tarefa específica;\n");
+                marcarConclusaoTarefa(listaTarefas, length);
+
                 break;
 
             case 7:

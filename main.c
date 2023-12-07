@@ -178,10 +178,34 @@ void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
     }
 }
 
+void deletarTarefa(Tarefa listaTarefas[], int length){
+//Recebe a posição e a reduz em 1 para funcionamento do vetor, já que o usuário inserirá sempre uma posição a mais das que se utilizam no código
+    printf("Qual a posicao deseja excluir?\n");
+    int posicao;
+    scanf("%d", &posicao);
+    posicao--;
+    
+//Valida se a posição é válida
+    if (posicao>=0 && posicao<length){
+        int i;
+
+        for(i=posicao; i<length-1; ++i){
+            listaTarefas[i] = listaTarefas[i+1];
+        }
+        
+//Reduz o tamanho (length) do vetor em 1 para realocar sobre a tarefa à ser deletada
+        length -= 1;
+        listaTarefas = realloc(listaTarefas, length * sizeof(Tarefa));
+    }else{
+        printf("\nPosicao invalida.\n");
+    }
+}
+
+
 int main() {
     int opcaoMenu;
 
-    Tarefa listaTarefas[100];
+Tarefa listaTarefas[100];
     int tamanhoLista = 0;
 
     while(opcaoMenu != 8){
@@ -254,7 +278,7 @@ int main() {
                 break;
 
             case 5:
-                printf("Remover tarefa;\n");
+                deletarTarefa(listaTarefas, &length);
                 break;
 
             case 6:

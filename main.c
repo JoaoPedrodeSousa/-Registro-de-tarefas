@@ -35,6 +35,7 @@ void inserirTarefa(Tarefa **listaTarefas, int *totalTarefas) {
 
     printf("\nQuantas tarefas deseja inserir? ");
     scanf("%d", &tamanho);
+    printf("\n");
     while (getchar() != '\n');
     
     *listaTarefas = realloc(*listaTarefas, (*totalTarefas + tamanho) * sizeof(Tarefa));
@@ -49,7 +50,8 @@ void inserirTarefa(Tarefa **listaTarefas, int *totalTarefas) {
         scanf(" %[^\n]", (*listaTarefas)[i].descricao);
 
         //Todas as tarefas sao criadas com o estado Pendente por padrao
-        strcpy((*listaTarefas)[i].estado, "Pendente"); 
+        strcpy((*listaTarefas)[i].estado, "Pendente");
+        printf("\n");
     }
 
     *totalTarefas += tamanho;
@@ -159,8 +161,7 @@ void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
 
     printf("--------------------------------------------------------------\n");
 
-    printf("Editar Informacoes de uma Tarefa\n");
-    printf("\nQual tarefa deseja editar? ");//O usuário digitara a posicao da tarefa para poder edita-la
+    printf("\nDigite a 'Posicao' da tarefa que deseja editar?: ");//O usuário digitara a posicao da tarefa para poder edita-la
     scanf("%d", &busca);
 
     printf("\n");
@@ -174,18 +175,15 @@ void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
           printf("Titulo da tarefa: %s\n", listaTarefas[i].titulo);
           printf("Descricao da tarefa: %s\n", listaTarefas[i].descricao);
           printf("Estado da tarefa: %s\n", listaTarefas[i].estado);
-          printf("************\n");
+          printf("********************************\n");
 
           printf("\n");
-
-          //printf("Digite o novo 'numero' da tarefa: ");
-          //scanf("%d", &listaTarefas[i].posicao);
 
           // Limpar o buffer de entrada
           while(getchar() != '\n');
 
           printf("Digite o novo 'titulo' da tarefa: ");
-          fgets(listaTarefas[i].titulo, 25, stdin);
+          fgets(listaTarefas[i].titulo, 60, stdin);
           listaTarefas[i].titulo[strcspn(listaTarefas[i].titulo, "\n")] = '\0';
 
           printf("Digite o novo 'descricao' da tarefa: ");
@@ -286,6 +284,48 @@ void marcarConclusaoTarefa(Tarefa *listaTarefas, int totalTarefas){
     printf("--------------------------------------------------------------\n\n");
 }
 
+void salvarEmArquivo(Tarefa* listaTarefas, int tamanhoLista){
+    int escolha;
+    FILE *arquivo;
+    arquivo = fopen("tarefas.txt","w");
+
+    if(arquivo == NULL){
+        printf("Erro ao abrir o arquivo!\n");
+        exit(1);
+    }
+
+    printf("Digite o 'Estado' da tarefa de acordo com as opcoes:\n");
+    printf("0 - Concluido\n");
+    printf("1 - Nao Concluido\n");
+    printf("\n");
+
+    for(int i = 0; i < tamanhoLista; i++){
+        printf("Posicao: %d\n",listaTarefas[i].posicao);
+        printf("Titulo: %s\n",listaTarefas[i].titulo);
+        printf("Descricao: %s\n",listaTarefas[i].descricao);
+        printf("Estado: ");
+        scanf("%d",&escolha);
+        printf("\n");
+
+        if(escolha == 0){
+            strcpy(listaTarefas[i].estado,"Concluido");
+            fprintf(arquivo, "%d;%s;%s;%s\n",listaTarefas[i].posicao, listaTarefas[i].titulo, listaTarefas[i].descricao, listaTarefas[i].estado);
+            
+        }else if(escolha == 1){
+            strcpy(listaTarefas[i].estado,"Nao Concluido");
+            fprintf(arquivo, "%d;%s;%s;%s\n",listaTarefas[i].posicao, listaTarefas[i].titulo, listaTarefas[i].descricao, listaTarefas[i].estado);
+            
+        }else{
+            printf("Opcao Invalida!\n");
+        }
+
+    }
+
+    printf("Arquivo criado com sucesso\n");
+    
+    fclose(arquivo);
+}
+
 int main() {
     int opcaoMenu = 0;
 
@@ -319,12 +359,12 @@ int main() {
                 break;
 
             case 3:
-                int resposta;
+
                 printf("Escolha uma das opcoes abaixo para buscar tarefas por titulo ou posicao:\n");
                 
                 printf("0 - Titulo\n");
                 printf("1 - Posicao\n");
-                
+                int resposta;
                 scanf("%d",&resposta);
 
                 getchar(); // Limpar o buffet de entrada;
@@ -355,7 +395,7 @@ int main() {
                 break;
 
             case 7:
-                printf("Salvar lista de tarefas em um arquivo\n");
+                salvarEmArquivo(listaTarefas, tamanhoLista);
                 break;
 
             default:

@@ -219,7 +219,7 @@ void deletarTarefa(Tarefa **listaTarefas, int *totalTarefas) {
     //Reduz o tamanho (totalTarefas) do vetor em 1 para realocar sobre a tarefa a ser deletada
         *totalTarefas -= 1;
         *listaTarefas = realloc(*listaTarefas, (*totalTarefas) * sizeof(Tarefa));
-
+        printf("Tarefa removida com sucesso!!\n");
     }else{
         printf("\nPosicao invalida.\n");
     }

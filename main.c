@@ -202,21 +202,22 @@ void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
 void deletarTarefa(Tarefa **listaTarefas, int *totalTarefas) {
     printf("--------------------------------------------------------------\n");
     
-    //Recebe a posicao e a reduz em 1 para funcionamento do vetor, ja que o usuario inserira sempre uma posicao a mais das que se utilizam no codigo
+//Requisita a posição da tarefa à ser removida
     int posicao;
     printf("Qual posicao deseja excluir? \n");
     scanf("%d", &posicao);
     posicao--;
     
-    //Valida se a posicao eh valida
+//Verifica se a posição é válida
     if (posicao>=0 && posicao<*totalTarefas){
         int i;
 
+//Substitui todas as tarefas subsequentes à escolhida
         for(i=posicao; i<*totalTarefas-1; ++i){
             (*listaTarefas)[i] = (*listaTarefas)[i+1];
         }
         
-    //Reduz o tamanho (totalTarefas) do vetor em 1 para realocar sobre a tarefa a ser deletada
+//Reduz o tamanho (totalTarefas) do vetor em 1 e realoca o tamanho da memória da estrutura
         *totalTarefas -= 1;
         *listaTarefas = realloc(*listaTarefas, (*totalTarefas) * sizeof(Tarefa));
         printf("Tarefa removida com sucesso!!\n");
@@ -234,19 +235,22 @@ void marcarConclusaoTarefa(Tarefa *listaTarefas, int totalTarefas){
 
     printf("--------------------------------------------------------------\n");
 
-    printf("\nQual tarefa deseja marcar? \n");
+//Requisita a posição da tarefa à ser marcada
+    printf("\nQual a posicao da que deseja marcar? \n");
     scanf("%d", &busca);
 
-    //Limpa o buffer de entrada
+//Limpa o buffer de entrada
     while(getchar() != '\n');
 
+//Verifica se a posição inseria é válida e mostra a selecionada
     for(int i=0; i<totalTarefas; i++) {
         if(listaTarefas[i].posicao==busca) {
             printf("Numero tarefa: %d\n", listaTarefas[i].posicao);
             printf("Titulo tarefa: %s\n", listaTarefas[i].titulo);
             printf("Descricao tarefa: %s\n", listaTarefas[i].descricao);
             printf("Status tarefa: %s\n", listaTarefas[i].estado);
-
+            
+//Mostra as opções de seleção
             printf("Opcoes de marcacao de Tarefa:\n");
             printf("1 - Pendente\n");
             printf("2 - Fazendo\n");
@@ -254,6 +258,7 @@ void marcarConclusaoTarefa(Tarefa *listaTarefas, int totalTarefas){
             printf("\nInforme o estado desta tarefa: ");
             scanf("%d",&escolha);
 
+//Atribui ao estado a opção escolhida            
             if(escolha==1){
                 strcpy(listaTarefas[i].estado,"Pendente");
             }else if(escolha==2){

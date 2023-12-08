@@ -280,10 +280,10 @@ void marcarConclusaoTarefa(Tarefa *listaTarefas, int totalTarefas){
     printf("--------------------------------------------------------------\n\n");
 }
 
-void salvarEmArquivo(Tarefa* listaTarefas, int tamanhoLista){
+void salvarEmArquivo(Tarefa* listaTarefas, int *tamanhoLista){
     int escolha;
     FILE *arquivo;
-    arquivo = fopen("tarefas.txt","w");
+    arquivo = fopen("tarefas.txt", "w");
 
     if(arquivo == NULL){
         printf("Erro ao abrir o arquivo!\n");
@@ -295,34 +295,31 @@ void salvarEmArquivo(Tarefa* listaTarefas, int tamanhoLista){
     printf("1 - Nao Concluido\n");
     printf("\n");
 
-    for(int i = 0; i < tamanhoLista; i++){
-        printf("Posicao: %d\n",listaTarefas[i].posicao);
-        printf("Titulo: %s\n",listaTarefas[i].titulo);
-        printf("Descricao: %s\n",listaTarefas[i].descricao);
+    for(int i = 0; i < *tamanhoLista; i++){
+        printf("Posicao: %d\n", listaTarefas[i].posicao);
+        printf("Titulo: %s\n", listaTarefas[i].titulo);
+        printf("Descricao: %s\n", listaTarefas[i].descricao);
         printf("Estado: ");
-        scanf("%d",&escolha);
-        printf("\n");
+        scanf("%d", &escolha);
+        getchar(); // Limpa o buffer de entrada
 
         if(escolha == 0){
-            strcpy(listaTarefas[i].estado,"Concluido");
-            fprintf(arquivo, "%d;%s;%s;%s\n",listaTarefas[i].posicao, listaTarefas[i].titulo, listaTarefas[i].descricao, listaTarefas[i].estado);
-            
-        }else if(escolha == 1){
-            strcpy(listaTarefas[i].estado,"Nao Concluido");
-            fprintf(arquivo, "%d;%s;%s;%s\n",listaTarefas[i].posicao, listaTarefas[i].titulo, listaTarefas[i].descricao, listaTarefas[i].estado);
-            
-        }else{
+            strcpy(listaTarefas[i].estado, "Concluido");
+            fprintf(arquivo, "%d;%s;%s;%s\n", listaTarefas[i].posicao, listaTarefas[i].titulo, listaTarefas[i].descricao, listaTarefas[i].estado);
+        } else if(escolha == 1){
+            strcpy(listaTarefas[i].estado, "Nao Concluido");
+            fprintf(arquivo, "%d;%s;%s;%s\n", listaTarefas[i].posicao, listaTarefas[i].titulo, listaTarefas[i].descricao, listaTarefas[i].estado);
+        } else{
             printf("Opcao Invalida!\n");
+            fclose(arquivo);
+            exit(1); // Encerra o programa em caso de opção inválida
         }
-
-
     }
 
     printf("Arquivo criado com sucesso\n");
-    
     fclose(arquivo);
-}
 
+}
 int main() {
     int opcaoMenu = 0;
 

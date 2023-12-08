@@ -164,10 +164,6 @@ void editarTarefa(Tarefa *listaTarefas, int tamanhoLista) {
     printf("\nDigite a 'Posicao' da tarefa que deseja editar?: ");//O usuário digitara a posicao da tarefa para poder edita-la
     scanf("%d", &busca);
 
-    printf("\n");
-
-    // Limpar o buffer de entrada
-    while(getchar() != '\n');
 
     for(int i = 0; i < tamanhoLista; i++) {
         if(listaTarefas[i].posicao == busca) {

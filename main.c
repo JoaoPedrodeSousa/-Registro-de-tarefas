@@ -319,6 +319,7 @@ void salvarEmArquivo(Tarefa* listaTarefas, int tamanhoLista){
             printf("Opcao Invalida!\n");
         }
 
+
     }
 
     printf("Arquivo criado com sucesso\n");

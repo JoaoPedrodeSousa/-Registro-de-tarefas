@@ -298,6 +298,7 @@ void salvarEmArquivo(Tarefa* listaTarefas, int *tamanhoLista){
         printf("Estado: ");
         scanf("%d", &escolha);
         getchar(); // Limpa o buffer de entrada
+        printf("\n");
 
         if(escolha == 0){
             strcpy(listaTarefas[i].estado, "Concluido");

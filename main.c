@@ -260,20 +260,16 @@ void marcarConclusaoTarefa(Tarefa *listaTarefas, int totalTarefas){
 
             if(escolha==1){
                 strcpy(listaTarefas[i].estado,"Pendente");
-                break;
             }else if(escolha==2){
                 strcpy(listaTarefas[i].estado,"Fazendo");
-                break;
             }else if(escolha==3){
                 strcpy(listaTarefas[i].estado,"Concluida");
             }else{
                 printf("Opcao invalida");
-                break;
             }
             printf("Marcacao realizada com sucesso\n");
 
             resultado=1;
-            break;
         }
     }
 

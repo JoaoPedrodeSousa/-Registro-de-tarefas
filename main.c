@@ -289,7 +289,7 @@ void marcarConclusaoTarefa(Tarefa *listaTarefas, int totalTarefas){
 int main() {
     int opcaoMenu = 0;
 
-    Tarefa listaTarefas = (Tarefa) malloc(sizeof(Tarefa));
+    Tarefa *listaTarefas = (Tarefa*) malloc(sizeof(Tarefa));
     
     int *tamanhoLista = (int *) malloc(sizeof(int));
     *tamanhoLista = 0;

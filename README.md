@@ -26,7 +26,7 @@ incluindo a possibilidade de editar e excluir tarefas previamente cadastradas e 
 
 ## Impressão do Menu
 
-![img.png](img.png)
+![fotoMenu.PNG](./fotoMenu.PNG)
 
 1. **Layout do Menu:**
 
